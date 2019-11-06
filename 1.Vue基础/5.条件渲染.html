@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        <h3 v-if="ok">Success</h3>
+        <h3 v-else>Failture</h3>
+
+        <h4 v-show="ok">Success</h4>
+        <h4 v-show="!ok">Failture</h4>
+
+        <template v-if="ok">
+            <h5>If</h5>
+            <h5>AM</h5>
+            <h5>A DJ</h5>
+        </template>
+        <template v-show="ok">
+            <h5>If</h5>
+            <h5>AM</h5>
+            <h5>A DJ</h5>
+        </template>
+
+        <button @click="update">Click me</button>
+    </div>
+
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                ok: true
+            },
+            computed: {
+
+            },
+            methods: {
+                update(){
+                    this.ok = !this.ok
+                }
+            }
+        })
+    </script>
+</body>
+</html>

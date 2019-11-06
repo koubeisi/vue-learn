@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        姓：<input type="text" placeholder="Last Name" v-model="firstName"> <br>
+        名：<input type="text" placeholder="First Name" v-model="lastName"> <br>
+        姓名（单向）：<input type="text" placeholder="Full Name" v-model="fullName1"> <br>
+        姓名（单向）：<input type="text" placeholder="Full Name" v-model="fullName2"> <br>
+        姓名（双向）：<input type="text" placeholder="Full Name" v-model="fullName3"> <br>
+        <p>{{fullName1}}</p>
+        <p>{{fullName1}}</p>
+        <p>{{fullName1}}</p>
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data:{
+                firstName:"A",
+                lastName:"B",
+                // fullName1:"",
+                fullName2:""
+            },
+            methods:{
+
+            },
+            computed: {
+                //什么时候执行？相关的数据发生改变
+                fullName1: { 
+                     get(){
+                         console.log("fullName1()")
+                         return this.firstName + ' ' + this.lastName
+                     },
+                     set(value){
+                         console.log(value)
+                     }
+                },
+                fullName3: {
+                    // 回调函数，计算并返回当前属性的值
+                    get(){
+                        return this.firstName + ' ' + this.lastName
+                    },
+                    set(value){
+                        let arr = value.split(' ')
+                        this.lastName = arr[1]
+                        this.firstName = arr[0]
+                    }
+                }
+            },
+            
+            watch:{
+                firstName: function(value){
+                    this.fullName2 = value + ' ' + this.lastName
+                },
+                lastName: function(value){
+                    console.log(this)
+                    this.fullName2 = this.firstName + ' ' + this.lastName
+                }
+            }
+        })
+    </script>
+</body>
+</html>

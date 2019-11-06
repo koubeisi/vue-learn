@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+   <div id="app">
+       
+       <h2>1.绑定监听</h2>
+
+        <button @click="count++">{{count}}</button>
+        <button @click="greet">Hello Vue!</button>
+        <button @click="say('Vue is awesome')">Say Vue!</button>
+        <button @click="warm('Warmming, you are becoming great!',$event)">WARM</button>
+
+       <h2>2.事件修饰符</h2>
+       <h2>3.按键修饰符</h2>
+   </div> 
+
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                count: 0
+            },
+            methods: {
+                greet(event){
+                    console.log(event.target.innerHTML)
+                },
+                say(msg){
+                    alert(msg)
+                },
+                warm(msg,event){
+                    alert(msg,event.target.innerHTML)
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>

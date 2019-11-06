@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+
+        <h2>v-for 遍历数组</h2>
+
+        <ul>
+            <li v-for="(p) in persons">
+                {{p.name}}------{{p.age}}-----{{p.position}}
+                
+            </li>
+        </ul>
+
+        <ul>
+            <li v-for="(p, index) in persons" :key="index">
+                {{index}}-----{{p.name}}------{{p.age}}-----{{p.position}}-----
+                <button @click="deletePerson(index)">Delete</button>
+            </li>
+        </ul>
+
+        <button @click="sortPerson">SortPerson</button>
+
+
+        <h2>v-for 遍历对象</h2>
+        <ul>
+            <li v-for="value of person">
+                {{value}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for="(value,key) of person">
+                {{key}}:{{value}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for="(value,key,index) of person">
+                {{index}}:{{key}}:{{value}}
+            </li>
+        </ul>
+
+    </div>
+
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                persons: [  //vue只是监视了persons的改变，没有监视数组内部数据的改变
+                    {name: "玉皇大帝", age: Infinity, position: "玉皇大帝"},
+                    {name: "孙悟空", age: 20000, position: "弼马温"},
+                    {name: "唐僧", age: 1300, position: "御弟"}
+                ],
+                person: {
+                    name: "猪八戒",
+                    age: Infinity,
+                    position: "天蓬元帅"
+                }
+            },
+            methods: {
+                deletePerson(index){
+                    this.persons.splice(index,1)
+                },
+                sortPerson(){
+                    this.persons.sort((a,b) => {
+                        return a.age - b.age
+                    })
+                    console.log(this.persons)
+                }
+            }
+
+        })
+    </script>
+    
+</body>
+</html>

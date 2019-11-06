@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        #app{
+            width: 400px;
+            margin: 0 auto
+        }
+        table{
+            border-collapse: collapse;
+            margin: 20px auto
+        }
+        td{
+            border: 1px solid burlywood;
+            width: 80px;
+            height: 30px;
+        }
+        input,.btn{
+            margin-left: auto;
+            margin-left: auto
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="filterValue">
+        <table>
+            <tr v-for="(p,index) in filterPersons" :key="index">
+                <td>{{index}}</td>
+                <td>{{p.name}}</td>
+                <td>{{p.age}}</td>
+            </tr>
+        </table>
+        <div class="btn">
+            <button @click="order1">升序</button>
+            <button @click="order2">降序</button>
+            <button @click="order0">原序</button>
+        </div>
+    </div>
+
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                persons:[
+                    {name: "Tom",age: 25},
+                    {name: "Jack",age: 23},
+                    {name: "Marry",age: 21},
+                    {name: "Haly",age: 29},
+                    {name: "Trump",age: 60},
+                    {name: "Obama",age: 42}
+                ],
+                orderType: 0, //0,原序；1，正序；2，倒序。
+                filterValue: ""
+            },
+            computed: {
+                filterPersons: {
+                    get(){
+                        ({persons, orderType, filterValue} = this)
+                        let tmp = persons.filter(p => p.name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1)
+                        if(orderType === 1){
+                            tmp = tmp.sort((p1, p2) => p1.age - p2.age)
+                        } else if(orderType === 2){
+                            tmp = tmp.sort((p1, p2) => p2.age - p1.age)
+                        }
+                        return tmp
+                    }
+                    
+                }
+            },
+            methods: {
+                order0(){
+                    this.orderType = 0
+                },
+                order1(){
+                    this.orderType = 1
+                },
+                order2(){
+                    this.orderType = 2
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>指令</title>
+    <script src="./vue.js"></script>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<!--
+    - ref
+    - v-cloak
+-->
+<div id="app">
+    <p ref="content">Hello Vue</p>
+    <button type="button" @click="hint">提示</button>
+    <p v-cloak>{{message}}</p>
+</div>
+<script>
+    alert("----")
+    new Vue({
+        el: "#app",
+        data: {
+            message: "I Love Vue."
+        },
+        methods: {
+            hint(){
+                alert(this.$refs.content.textContent)
+            }
+        }
+    })
+</script>
+<!--
+    1.注册全局指令
+    2.注册局部指令
+
+    需求：自定义两个指令
+        1.功能类似v-text，但转换为全大写，v-upper-text
+        2.功能类型v-text，但转换为全小写, v-lower-text
+-->
+<div id="app1">
+    <p v-upper-text="msg"></p>
+</div>
+<div id="app2">
+    <p v-lower-text="msg"></p>
+    <p v-upper-text="msg"></p>
+</div>
+<script>
+    /**
+     * @param el        指令属性所在的标签对象
+     * @param binding   包含指令相关信息的对象
+     */
+    Vue.directive("upper-text",function (el, binding) {
+        // console.log(el,binding)
+        el.textContent = binding.value.toUpperCase()
+    })
+    new Vue({
+        el: "#app1",
+        data: {
+            msg: "I Love Vue!"
+        }
+    })
+
+    new Vue({
+        el: "#app2",
+        data:{
+            msg:"Hello Vue!"
+        },
+        directives:{
+            "lower-text":function (el, binding) {
+                el.innerText = binding.value.toLowerCase()
+            }
+        }
+    })
+</script>
+</body>
+</html>

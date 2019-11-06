@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单数据的自动收集</title>
+</head>
+<body>
+
+<div id="app">
+
+    <!-- <form> -->
+        <label>用户名：
+            <input type="text" v-model="username">
+        </label>
+        <br>
+
+        <label>密码：
+            <input id="password" type="password" v-model="password">
+        </label>
+        <br>
+
+        <label>性别：</label>
+        <label>
+            <input type="radio" value="male" v-model="gender">男
+        </label>
+        <label>
+            <input type="radio" value="female" v-model="gender">女
+        </label>
+        <br>
+
+        <label>爱好：</label>
+        <label>
+            <input type="checkbox" value="basketball" v-model="hobby">篮球
+        </label>
+        <label>
+            <input type="checkbox" value="football" v-model="hobby">足球
+        </label>
+        <label>
+            <input type="checkbox" value="pingpong" v-model="hobby">乒乓球
+        </label>
+        <br>
+
+        <label>城市：
+            <select v-model="cityId">
+                <option value="">未选择</option>
+                <option v-bind:value="city.id" v-for="(city,index) in allCity" :key="index">{{city.name}}</option>
+            </select>
+        </label>
+        <br>
+        <br>
+
+        <label>介绍：
+            <textarea v-model="desc" cols="30" rows="5"></textarea>
+        </label>
+
+        <input type="submit" value="提交" v-on:click="submitForm">
+
+    <!-- </form> -->
+
+</div>
+
+<script src="./vue.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            username: "",
+            password: "",
+            gender: "male",
+            hobby: ["football"],
+            allCity: [{id:1,name:"beijing"},{id:2,name:"tianjin"}],
+            cityId: "",
+            desc: ""
+
+        },
+        methods: {
+            submitForm(){
+                console.log(this.username,this.password,this.gender,this.hobby,this.cityId,this.desc)
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

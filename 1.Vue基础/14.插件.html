@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>插件</title>
+</head>
+<body>
+<div id="app">
+    <p v-my-directive="msg"></p>
+</div>
+<script src="./vue.js"></script>
+<script src="./vue-myPlugin.js"></script>
+<script>
+    //声明使用插件
+    Vue.use(MyPlugin)   //内部执行MyPlugin.install(vue)
+
+    Vue.myGlobalMethod()
+
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            msg: "I Love Vue!"
+        }
+    })
+
+    vm.$myMethod()
+</script>
+</body>
+</html>

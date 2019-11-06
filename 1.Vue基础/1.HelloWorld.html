@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<!--    <script src="https://cn.vuejs.org/js/vue.js"></script>-->
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="message">
+        <p>{{message}}</p>
+    </div>
+    <div id="test">
+        <input type="text" v-model="message">
+        <p>{{message}}</p>
+    </div>
+
+
+
+    <script>
+        /**
+         *
+         * @type {Vue}
+         */
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                message: "Hello World!"
+            }
+        })
+        const test = new Vue({
+            el: "#test",
+            data: {
+                message: "Hello Vue!"
+            }
+        })
+    </script>
+</body>
+</html>

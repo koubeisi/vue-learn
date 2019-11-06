@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .move-enter-active, .move-leave-active{
+            transition: opacity 2s;
+        }
+        .move-enter, .move-leave-to{
+            opacity: 0;
+        }
+        .move-enter-to, .move-leave{
+            opacity: 1;
+        }
+        .bounce-enter-active {
+            animation: bounce-in .5s;
+        }
+        .bounce-leave-active {
+            animation: bounce-in .5s reverse;
+        }
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+
+        <button @click="isShow = !isShow">toggle</button>
+        <transition name="move">
+            <p v-show="isShow">Hello Vue</p>
+        </transition>
+        <transition name="bounce">
+            <p v-if="isShow">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis enim libero, at lacinia diam fermentum id. Pellentesque habitant morbi tristique senectus et netus.</p>
+        </transition>
+
+    </div>
+
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script>
+
+        new Vue({
+            el:"#app",
+            data(){
+                return {
+                    isShow: true
+                }
+            }
+        })
+        Math.random()
+    </script>
+    
+</body>
+</html>

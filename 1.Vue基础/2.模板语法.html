@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        <h2>1.双大括号表达式</h2>
+        <p>{{msg}}</p>
+        <p>{{msg.toUpperCase()}}</p>
+        <P v-text="msg1"></p>
+        <P v-html="msg1"></p>
+
+        <h2>2.指令一：强制数据绑定</h2>
+        <img v-bind:src="imgUrl">
+        <img :src="imgUrl">
+
+        <h3>3.指令二：绑定事件监听</h3>
+        <button v-on:click="test1">点我</button>
+        <button @click="test2(msg)">点我</button>
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data:{
+                msg: "I'm happy.",
+                msg1:"<a href='http://www.baidu.com'>百度</a>",
+                imgUrl: "https://cn.vuejs.org/images/logo.png"
+            },
+            methods: {
+                test1(){
+                    alert("haha")
+                },
+                test2(content){
+                    alert(content)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

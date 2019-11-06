@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<!-- 
+    需求：对当前日期进行格式化
+ -->
+<body>
+    <div id="app">
+        <h2>格式化显示当前日期</h2>
+        <p>未格式化：{{date}}</p>
+        <p>格式化版：{{date | dateString}}</p>
+    </div>
+
+    <script src="../lib/moment.js"></script>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.filter("dateString",function(value){
+            return moment(value).format("YYYY-MM-DD HH:mm:ss")
+        })
+        new Vue({
+            el: "#app",
+            data: {
+                date: new Date()
+            }
+        })
+    </script>
+</body>
+</html>
