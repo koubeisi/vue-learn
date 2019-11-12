@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Markdown</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body,#editor {
+            height: 100%;
+            width: 100%;
+        }
+        #editor > textarea{
+            width: 50%;
+            height: 100%;
+            box-sizing: border-box;
+            float: left;
+            border: none;
+            border-right: 1px solid #ccc;
+            resize: none;
+            outline: none;
+            background-color: #f6f6f6;
+            font-size: 14px;
+            font-family: 'Monaco', courier, monospace;
+            padding: 20px;
+        }
+        #editor > div{
+            width: 50%;
+            height: 100%;
+            box-sizing: border-box;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+
+<div id="editor">
+    <textarea :value="rawMarkdown" @input="update"></textarea>
+    <div v-html="compliedMarkdown"></div>
+</div>
+<script src="https://unpkg.com/marked@0.3.6"></script>
+<script src="https://unpkg.com/lodash@4.16.0"></script>
+<script src="../../lib/vue.js"></script>
+<script>
+    new Vue({
+        el: "#editor",
+        data:{
+            rawMarkdown: "# hello"
+        },
+        computed:{
+            compliedMarkdown:function () {
+                return marked(this.rawMarkdown, {sanitize: true})
+            }
+        },
+        methods:{
+            //调用防抖函数debounce返回一个函数赋值给update，使得update函数在300ms内无论触发多少次都执行最后一次
+            //这样做的原因在于只要 rawMarkdown 的值改变，computedMarkdown就要进行计算
+            //而我们在输入的过程中，rawMarkdown在不断的改变，浪费了大量的计算资源
+            //而防抖动函数的引入，rawMarkdown 的值改变的频率得到降低，程序的效率得到大大改善
+            update:_.debounce(function (event) {
+                this.rawMarkdown = event.target.value
+            },300)
+        }
+    })
+</script>
+</body>
+</html>

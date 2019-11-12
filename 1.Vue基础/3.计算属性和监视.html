@@ -45,6 +45,7 @@
                 fullName3: {
                     // 回调函数，计算并返回当前属性的值
                     get(){
+                        console.log("---")
                         return this.firstName + ' ' + this.lastName
                     },
                     set(value){

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,17 +33,26 @@
 
         <h2>1.class的绑定</h2>
 
-        <p v-bind:class="aClass" class="c_class">v-bind:class值是字符串</p>
+        <p :class="aClass" class="c_class">v-bind:class值是字符串</p>
 
-        <p :class="{a_class: isA,c_class: isB}">v-bind:class值是对象</p>
+        <p :class="{a_class: isA,c_class: isB}">v-bind:class值取决于布尔属性的数据值</p>
 
-        <p :class="[aClass,cClass]">v-bind:class值是数组</p>
+        <!--  这种应该是最好用的 -->
+        <p :class="classObject">v-bind:class值是对象</p>
+
+        <p :class="classCompute">v-bind:class值绑定计算属性</p>
+
+        <p :class="[bClass,cClass]">v-bind:class值是数组</p>
 
         <h2>2.style的绑定</h2>
-        
+        <!-- v-bind:style 使用需要添加浏览器引擎前缀的 CSS 属性,Vue.js 会自动侦测并添加相应的前缀  -->
+
+        <!-- 此方式更为灵活，更方便控制style的值  -->
         <p :style="{fontSize:fontSize + 'px',color:fontColor}">:style绑定</p>
-        
-        <button v-on:click="update">点我</button>
+
+        <p :style="styleObject">样式对象</p>
+
+        <button @click="update()">点我</button>
     </div>
 
 <script>
@@ -53,17 +62,31 @@
             aClass: "a_class",
             isA:true,
             isB:false,
-            bClass:["a_class","c_class"],
+            classObject:{
+                b_class: true,
+                c_class: true
+            },
+            bClass: "b_class",
             cClass: "c_class",
             fontSize: 14,
-            fontColor: "blue"
+            fontColor: "blue",
+            styleObject:{
+                fontSize: "1.1em",
+                color: "green"
+            }
+        },
+        computed:{
+            classCompute:function () {
+                return {
+                    a_class: this.isA && true,
+                    b_class: this.isB && true
+                }
+            }
         },
         methods: {
             update(){
-                this.aClass = "b_class"
-                this.isB = true
-                this.fontSize = 20
-                this.fontColor = "red"
+                this.fontSize = 1 + this.fontSize
+
             }
         }
     })
