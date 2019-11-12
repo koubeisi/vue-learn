@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>父组件和子组件</title>
+</head>
+<body>
+<div id="app">
+    <cpn2></cpn2>
+</div>
+<!--注册组件的模板抽离写法-->
+<template id="cpn1">
+    <div>
+        <h2>组件1</h2>
+        <p>这是组件1的内存</p>
+    </div>
+</template>
+<template id="cpn2">
+    <div>
+        <h2>组件2</h2>
+        <p>这是组件2的内存</p>
+        <cpn1></cpn1>
+    </div>
+</template>
+
+<script src="../lib/vue.js"></script>
+<script>
+    /*子组件*/
+    const cpn1 = Vue.extend({
+        template:"#cpn1"
+    })
+    /*父组件*/
+    const cpn2 = Vue.extend({
+        template:"#cpn2",
+        components:{
+            cpn1:cpn1
+        }
+    })
+
+    /*祖父组件*/
+    new Vue({
+        el:"#app",
+        components:{
+            cpn2:cpn2
+        }
+    })
+</script>
+</body>
+</html>

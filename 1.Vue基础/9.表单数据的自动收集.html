@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <title>表单数据的自动收集</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -12,11 +17,13 @@
         <label>用户名：
             <input type="text" v-model="username">
         </label>
+        <span v-cloak>{{username}}</span>
         <br>
 
         <label>密码：
             <input id="password" type="password" v-model="password">
         </label>
+        <span v-cloak>{{password}}</span>
         <br>
 
         <label>性别：</label>
@@ -26,6 +33,7 @@
         <label>
             <input type="radio" value="female" v-model="gender">女
         </label>
+        <span v-cloak>{{gender}}</span>
         <br>
 
         <label>爱好：</label>
@@ -38,30 +46,41 @@
         <label>
             <input type="checkbox" value="pingpong" v-model="hobby">乒乓球
         </label>
+        <span v-cloak>{{hobby}}</span>
         <br>
 
         <label>城市：
             <select v-model="cityId">
                 <option value="">未选择</option>
-                <option v-bind:value="city.id" v-for="(city,index) in allCity" :key="index">{{city.name}}</option>
+                <option :value="city.id" v-for="(city,index) in allCity" :key="index">{{city.name}}</option>
             </select>
         </label>
+        <span v-cloak>{{cityId}}</span>
         <br>
         <br>
 
         <label>介绍：
             <textarea v-model="desc" cols="30" rows="5"></textarea>
         </label>
+        <span v-cloak>{{desc}}</span>
 
-        <input type="submit" value="提交" v-on:click="submitForm">
+        <input type="submit" value="提交" @click="submitForm">
+    <br>
 
-    <!-- </form> -->
+    <h3>修饰符lazy</h3>
+    <input type="text" v-model.lazy="msg"> <span>{{msg}}</span>
+
+    <h3>修饰符number</h3>
+    <input type="number" v-model.number="num"> <span>{{typeof num}}</span>
+
+    <h3>修饰符trim</h3>
+    <input type="text" v-model.trim="space"> <span>{{space}}</span>
 
 </div>
 
 <script src="./vue.js"></script>
 <script>
-    new Vue({
+    const vm = new Vue({
         el: "#app",
         data: {
             username: "",
@@ -70,7 +89,10 @@
             hobby: ["football"],
             allCity: [{id:1,name:"beijing"},{id:2,name:"tianjin"}],
             cityId: "",
-            desc: ""
+            desc: "",
+            msg: "",
+            num:"",
+            space:""
 
         },
         methods: {

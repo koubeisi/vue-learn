@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>全局组件和局部组件</title>
+</head>
+<body>
+<div id="app1">
+    <cmp1 :title="'Vue'" :content="'Vue is awesome.'"></cmp1>
+    <!--  cmp2属于全局组件，因此无论在app1还是app2范围内都会生效  -->
+    <cmp2 :prop-a="101" :prop-b="'40'" :prop-c="{name:'Jack',age:6}"></cmp2>
+</div>
+
+<div id="app2">
+    <!--  cmp1属于局部组件，因此在app2范围内不会生效  -->
+    <cmp1 :title="'Vue'" :content="'Vue is awesome.'"></cmp1>
+    <!--  cmp2有默认值的属性  -->
+    <cmp2 :prop-b="'23'"></cmp2>
+</div>
+
+<script src="../lib/vue.js"></script>
+<script>
+    const cmp1 = Vue.extend({
+        props:{
+            title:String,
+            content:String
+        },
+        template: `
+            <div>
+                <h2>{{title}}</h2>
+                <p>{{content}}</p>
+            </div>
+        `
+    })
+
+    const cmp2 = Vue.extend({
+        props:{
+            //带有默认值的数字
+            propA:{
+                type:Number,
+                default: 100
+            },
+            //多个可能的类型
+            propB:[String,Number],
+            propC:{
+                type: Object,
+                default: function () {
+                    return {name:"Tom",age:5}
+                }
+            }
+        },
+        template:`
+            <div>
+                <p>{{propA}}</p>
+                <p>{{propB}}</p>
+                <p>{{"name:" + propC.name + ", age:" + propC.age }}</p>
+            </div>
+        `
+    })
+    Vue.component("cmp2",cmp2)
+
+    new Vue({
+        el:"#app1",
+        components:{
+            cmp1: cmp1
+        }
+    })
+
+    new Vue({
+        el:"#app2"
+    })
+</script>
+</body>
+</html>
