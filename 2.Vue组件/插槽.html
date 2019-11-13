@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>slot</title>
+    <style>
+        h2{
+            margin: 0.5em 0;
+        }
+    </style>
+</head>
+<body>
+<div id="app1">
+    <h2>插槽内容</h2><hr>
+    <cmp1 :href="'https://www.zhihu.com'">知乎</cmp1>
+    <br>
+
+    <h2>具名插槽</h2><hr>
+    <cmp2>
+        <template v-slot:header>
+            使用了v-slot:header指明了对应的插槽
+        </template>
+        <template v-slot:default>
+            我的段落，我的段落，我的段落，我的段落，我的段落，我的段落，我的段落，我的段落，我的段落，我的段落，
+        </template>
+        <template v-slot:footer>
+            <span>CopeRight 2019</span><span>插槽</span>
+        </template>
+    </cmp2>
+    <!--  剧名插槽的缩写  -->
+    <cmp2>
+        <template #header>
+            使用了#header代替v-slot:header
+        </template>
+        <template #default>
+            我的段落，我的段落，我的段落，我的段落，我的段落，我的段落，我的段落，我的段落，我的段落，我的段落，
+        </template>
+        <template #footer>
+            <span>CopeRight 2019</span><span>插槽</span>
+        </template>
+    </cmp2>
+    <br>
+
+    <h2>作用域插槽</h2><hr>
+    <cmp3></cmp3>
+    <cmp3>
+        <template v-slot:default="slotProps">
+            {{slotProps.user.lastName}}
+        </template>
+    </cmp3>
+    <!--默认插槽的缩写-->
+    <cmp3>
+        <template v-slot="slotProps">
+            {{slotProps.user.age}}
+        </template>
+    </cmp3>
+    <!--解构插槽-->
+
+</div>
+
+<script src="../lib/vue.js"></script>
+<!--一个带有后备内容的插槽-->
+<template id="cmp1">
+    <div>
+        <a :href="href">
+            <slot>点我</slot>
+        </a>
+    </div>
+</template>
+<template id="cmp2">
+    <article>
+        <header>
+            <h4><slot name="header"></slot></h4>
+        </header>
+        <section>
+            <p><slot></slot></p>
+        </section>
+        <footer>
+            <p><slot name="footer"></slot></p>
+        </footer>
+    </article>
+</template>
+<template id="cmp3">
+    <div>
+        <slot v-bind:user="user">
+            {{user.firstName}}
+        </slot>
+    </div>
+</template>
+<script>
+    const cmp1 = Vue.extend({
+        template:"#cmp1",
+        props:{
+            href:{
+                type:String,
+                default:"https://www.baidu.com"
+            }
+        }
+    })
+    const cmp2 = Vue.extend({
+        template:"#cmp2"
+    })
+    const cmp3 =Vue.extend({
+        template:"#cmp3",
+        data(){
+            return {
+                user:{
+                    firstName: "Bill",
+                    lastName: "Gates",
+                    age:63
+                }
+            }
+        }
+    })
+
+    new Vue({
+        el:"#app1",
+        data:{
+            user:{
+                name:"小八",
+                location:"南宁市洪范街道"
+            }
+        },
+        components:{
+            cmp1:cmp1,
+            cmp2:cmp2,
+            cmp3:cmp3
+        }
+    })
+</script>
+</body>
+</html>
